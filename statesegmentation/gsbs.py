@@ -1,5 +1,5 @@
 from numpy import cov, ndarray, nonzero, ones, triu, unique, zeros, arange, max, where, sum, copy, unravel_index, \
-    argsort, cumsum, all, equal, array
+    argsort, cumsum, all, equal, array, corrcoef, insert, round, linspace
 from scipy.spatial.distance import cdist
 from scipy.stats import pearsonr, ttest_ind
 from typing import Optional
@@ -506,17 +506,17 @@ class GSBS:
           fig, axs = plt.subplots(1,num_subplots,figsize=(scale*3*num_subplots,scale*2*num_subplots), dpi=500/scale)
         
           axs.set_title(title,fontsize=fontsize+2)
-          corr_plot = axs.imshow(np.corrcoef(GSBS.x)[:until_time,:until_time],interpolation='none',cmap=color_map,vmin=-1,vmax=1,aspect='equal')
+          corr_plot = axs.imshow(corrcoef(GSBS.x)[:until_time,:until_time],interpolation='none',cmap=color_map,vmin=-1,vmax=1,aspect='equal')
           axs.set_xlabel('Time (minutes)',fontsize=fontsize)
           axs.set_ylabel('Time (minutes)',fontsize=fontsize)
         
-          axs.set_xticks(np.arange(len((np.linspace(0,until_time-1,until_time)*tr_in_seconds))))
-          axs.set_xticklabels(np.round(np.linspace(0,until_time-1,until_time)*tr_in_seconds/60,1), fontsize=8,rotation=60)
+          axs.set_xticks(arange(len((np.linspace(0,until_time-1,until_time)*tr_in_seconds))))
+          axs.set_xticklabels(round(linspace(0,until_time-1,until_time)*tr_in_seconds/60,1), fontsize=8,rotation=60)
           ticks = axs.get_xticks()[::time_tick_fraction]
           axs.set_xticks(ticks)
         
-          axs.set_yticks(np.arange(len((np.linspace(0,until_time-1,until_time)*tr_in_seconds))))
-          axs.set_yticklabels(np.round(np.linspace(0,until_time-1,until_time)*tr_in_seconds/60,1), fontsize=8,rotation=60)
+          axs.set_yticks(arange(len((np.linspace(0,until_time-1,until_time)*tr_in_seconds))))
+          axs.set_yticklabels(round(linspace(0,until_time-1,until_time)*tr_in_seconds/60,1), fontsize=8,rotation=60)
           ticks = axs.get_yticks()[::time_tick_fraction]
           axs.set_yticks(ticks)
         
@@ -528,8 +528,8 @@ class GSBS:
         
         
           # Specify the locations of the vertical and horizontal lines
-          line_positions = np.where(GSBS.bounds[:until_time])[0] # Line positions are where there are bounds
-          line_positions = np.insert(line_positions,[0,len(line_positions)],[0,len(GSBS.bounds[:until_time])]) # Add the first and the last timepoint
+          line_positions = where(GSBS.bounds[:until_time])[0] # Line positions are where there are bounds
+          line_positions = insert(line_positions,[0,len(line_positions)],[0,len(GSBS.bounds[:until_time])]) # Add the first and the last timepoint
         
           # Add rectangles at diagonal intersections
           for i in range(len(line_positions) - 1):
