@@ -491,7 +491,8 @@ class GSBS:
         return (x - x.mean(1, keepdims=True)) / x.std(1, keepdims=True, ddof=1)
     
     @staticmethod
-    def plot_time_by_time_corr_mtx(title = 'Time by Time \n Correlation Matrix',
+    def plot_time_by_time_corr_mtx(self,
+                                title = 'Time by Time \n Correlation Matrix',
                                    scale = 0.9, 
                                    num_subplots = 1, 
                                    fontsize = 4,
@@ -506,7 +507,7 @@ class GSBS:
           fig, axs = plt.subplots(1,num_subplots,figsize=(scale*3*num_subplots,scale*2*num_subplots), dpi=500/scale)
         
           axs.set_title(title,fontsize=fontsize+2)
-          corr_plot = axs.imshow(corrcoef(GSBS.x)[:until_time,:until_time],interpolation='none',cmap=color_map,vmin=-1,vmax=1,aspect='equal')
+          corr_plot = axs.imshow(corrcoef(self.x)[:until_time,:until_time],interpolation='none',cmap=color_map,vmin=-1,vmax=1,aspect='equal')
           axs.set_xlabel('Time (minutes)',fontsize=fontsize)
           axs.set_ylabel('Time (minutes)',fontsize=fontsize)
         
@@ -528,8 +529,8 @@ class GSBS:
         
         
           # Specify the locations of the vertical and horizontal lines
-          line_positions = where(GSBS.bounds[:until_time])[0] # Line positions are where there are bounds
-          line_positions = insert(line_positions,[0,len(line_positions)],[0,len(GSBS.bounds[:until_time])]) # Add the first and the last timepoint
+          line_positions = where(self.bounds[:until_time])[0] # Line positions are where there are bounds
+          line_positions = insert(line_positions,[0,len(line_positions)],[0,len(self.bounds[:until_time])]) # Add the first and the last timepoint
         
           # Add rectangles at diagonal intersections
           for i in range(len(line_positions) - 1):
