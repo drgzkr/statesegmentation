@@ -510,12 +510,12 @@ class GSBS:
           axs.set_xlabel('Time (minutes)',fontsize=fontsize)
           axs.set_ylabel('Time (minutes)',fontsize=fontsize)
         
-          axs.set_xticks(arange(len((np.linspace(0,until_time-1,until_time)*tr_in_seconds))))
+          axs.set_xticks(arange(len((linspace(0,until_time-1,until_time)*tr_in_seconds))))
           axs.set_xticklabels(round(linspace(0,until_time-1,until_time)*tr_in_seconds/60,1), fontsize=8,rotation=60)
           ticks = axs.get_xticks()[::time_tick_fraction]
           axs.set_xticks(ticks)
         
-          axs.set_yticks(arange(len((np.linspace(0,until_time-1,until_time)*tr_in_seconds))))
+          axs.set_yticks(arange(len((linspace(0,until_time-1,until_time)*tr_in_seconds))))
           axs.set_yticklabels(round(linspace(0,until_time-1,until_time)*tr_in_seconds/60,1), fontsize=8,rotation=60)
           ticks = axs.get_yticks()[::time_tick_fraction]
           axs.set_yticks(ticks)
