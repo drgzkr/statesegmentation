@@ -489,8 +489,7 @@ class GSBS:
     @staticmethod
     def _zscore(x: ndarray) -> ndarray:
         return (x - x.mean(1, keepdims=True)) / x.std(1, keepdims=True, ddof=1)
-    
-    @staticmethod
+        
     def plot_time_by_time_corr_mtx(self,
                                 title = 'Time by Time \n Correlation Matrix',
                                    scale = 0.9, 
