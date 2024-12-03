@@ -5,7 +5,8 @@ from scipy.stats import pearsonr, ttest_ind
 from typing import Optional
 from tqdm import tqdm
 import warnings
-
+import matplotlib.pyplot as plt
+from matplotlib.patches import Rectangle
 
 class GSBS:
     def __init__(self, kmax: int, x: ndarray, statewise_detection: Optional[bool] = True, finetune: Optional[int] = 1,
@@ -488,3 +489,55 @@ class GSBS:
     @staticmethod
     def _zscore(x: ndarray) -> ndarray:
         return (x - x.mean(1, keepdims=True)) / x.std(1, keepdims=True, ddof=1)
+
+    def plot_time_by_time_corr_mtx(title = 'Time by Time \n Correlation Matrix',
+                                   scale = 0.9, 
+                                   num_subplots = 1, 
+                                   fontsize = 4,
+                                   line_color = 'black', 
+                                   line_width = 0.2, # Width of the boundary lines
+                                   color_map = 'PuOr', # Colormap of the correlation matrix
+                                   tr_in_seconds = 2, # For the x and y axes labels in minutes
+                                   time_tick_fraction = 60, # This adjusts how dense the minute labels on the axes will be, values means every nth is shown
+                                   until_time = 200 # This adjusts for how many timepoints you want to show the correlation matrix: data_len for all
+                                   ):
+
+          fig, axs = plt.subplots(1,num_subplots,figsize=(scale*3*num_subplots,scale*2*num_subplots), dpi=500/scale)
+        
+          axs.set_title(title,fontsize=fontsize+2)
+          corr_plot = axs.imshow(np.corrcoef(GSBS.x)[:until_time,:until_time],interpolation='none',cmap=color_map,vmin=-1,vmax=1,aspect='equal')
+          axs.set_xlabel('Time (minutes)',fontsize=fontsize)
+          axs.set_ylabel('Time (minutes)',fontsize=fontsize)
+        
+          axs.set_xticks(np.arange(len((np.linspace(0,until_time-1,until_time)*tr_in_seconds))))
+          axs.set_xticklabels(np.round(np.linspace(0,until_time-1,until_time)*tr_in_seconds/60,1), fontsize=8,rotation=60)
+          ticks = axs.get_xticks()[::time_tick_fraction]
+          axs.set_xticks(ticks)
+        
+          axs.set_yticks(np.arange(len((np.linspace(0,until_time-1,until_time)*tr_in_seconds))))
+          axs.set_yticklabels(np.round(np.linspace(0,until_time-1,until_time)*tr_in_seconds/60,1), fontsize=8,rotation=60)
+          ticks = axs.get_yticks()[::time_tick_fraction]
+          axs.set_yticks(ticks)
+        
+          axs.tick_params(axis='y', labelsize=fontsize)
+          axs.tick_params(axis='x', labelsize=fontsize)
+        
+          cbar = fig.colorbar(corr_plot)
+          cbar.ax.tick_params(labelsize=fontsize) 
+        
+        
+          # Specify the locations of the vertical and horizontal lines
+          line_positions = np.where(GSBS.bounds[:until_time])[0] # Line positions are where there are bounds
+          line_positions = np.insert(line_positions,[0,len(line_positions)],[0,len(GSBS.bounds[:until_time])]) # Add the first and the last timepoint
+        
+          # Add rectangles at diagonal intersections
+          for i in range(len(line_positions) - 1):
+              x_start = line_positions[i]-0.5
+              x_end = line_positions[i + 1]-0.5
+              box_size = x_end - x_start  # Calculate the size of the box
+        
+              # Create a rectangle at the diagonal position
+              rect = Rectangle((x_start, x_start), box_size, box_size,
+                                edgecolor=line_color, facecolor='none', lw=line_width)  # Customize appearance
+              axs.add_patch(rect)
+          fig.tight_layout()
