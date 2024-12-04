@@ -546,7 +546,7 @@ class GSBS:
           fig.tight_layout()
 
     def plot_summary(self):
-        fig, axs = plt.subplots(2, 2, gridspec_kw={'height_ratios': [1,1], 'width_ratios': [1, 1]}, figsize=(10, 5))
+        fig, axs = plt.subplots(2, 2, gridspec_kw={'height_ratios': [1,1], 'width_ratios': [1, 1]}, figsize=(10, 6))
         
         fig.subplots_adjust(hspace=0.4, wspace=0.3)
         axs[1, 0].axis('off') 
@@ -561,8 +561,11 @@ class GSBS:
         axs[0, 0].set_title('T-Dist Curve \n Best Solution: '+str(npargmax(self.tdists))+' States')
         axs[0, 0].axvline(npargmax(self.tdists))
         axs[0, 0].plot(self.tdists)
+        axs[0, 0].set_xlabel('Number of States')
+        axs[0, 0].set_ylabel('T-Dist')
+
         
-        axs[0, 1].set_title('Time by Time Corr Mtx and Boundaries')
+        axs[0, 1].set_title('Time by Time Corr Mtx \n and Boundaries')
         corr_plot = axs[0, 1].imshow(corrcoef(self.x),interpolation='none',vmin=-1,vmax=1,aspect='equal')
         axs[0, 1].set_xlabel('Timepoints')
         axs[0, 1].set_ylabel('Timepoints')
@@ -588,4 +591,5 @@ class GSBS:
         for bound in where(self.bounds>0)[0]:
             axs[1,1].axvline(bound,color='white')
         
+        fig.tight_layout()
         plt.show()
