@@ -549,6 +549,7 @@ class GSBS:
         fig, axs = plt.subplots(2, 2, gridspec_kw={'height_ratios': [1,1], 'width_ratios': [1, 1]}, figsize=(15, 8))
         
         fig.subplots_adjust(hspace=0.4, wspace=0.3)
+        axs[1, 0].axis('off') 
         axs[1, 0].remove()
         axs[1, 1] = plt.subplot2grid((2, 2), (1, 0), colspan=2)
         
@@ -577,7 +578,7 @@ class GSBS:
             axs[0, 1].add_patch(rect)
         
         
-        axs[1, 1].set_title('Timeseries Data and Bopundaries')
+        axs[1, 1].set_title('Timeseries Data and Boundaries')
         axs[1, 1].set_xlabel('Timepoints')
         axs[1, 1].set_ylabel('Units')
         axs[1, 1].imshow(self.x.T,interpolation='none',aspect='auto')
