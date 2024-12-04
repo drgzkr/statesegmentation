@@ -546,7 +546,7 @@ class GSBS:
           fig.tight_layout()
 
     def plot_summary(self):
-        fig, axs = plt.subplots(2, 2, gridspec_kw={'height_ratios': [1,1], 'width_ratios': [1, 1]}, figsize=(15, 8))
+        fig, axs = plt.subplots(2, 2, gridspec_kw={'height_ratios': [1,1], 'width_ratios': [1, 1]}, figsize=(10, 5))
         
         fig.subplots_adjust(hspace=0.4, wspace=0.3)
         axs[1, 0].axis('off') 
