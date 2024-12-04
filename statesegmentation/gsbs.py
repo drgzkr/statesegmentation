@@ -8,6 +8,7 @@ from tqdm import tqdm
 import warnings
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
+from matplotlib.lines import Line2D
 
 class GSBS:
     def __init__(self, kmax: int, x: ndarray, statewise_detection: Optional[bool] = True, finetune: Optional[int] = 1,
@@ -590,6 +591,16 @@ class GSBS:
         axs[1, 1].imshow(self.x.T,interpolation='none',aspect='auto')
         for bound in where(self.bounds>0)[0]:
             axs[1,1].axvline(bound,color='white')
+
+        # Add a secondary y-axis on the right
+        ax_right = axs[1,1].twinx()
+        # Set labels for both y-axes
+        ax_right.set_ylabel("Boundary Strength")
+        # Control vertical lines with axvline and clipping
+        for bound_idx, bound in enumerate(where(self.bounds>0)[0]):
+            #ax_right.axvline(x=bound, ymin=0, ymax=self.strengths[self.strengths>0][bound_idx], color='red', linewidth=2, label='Strength')  # Line between y=2 and y=8 (normalized)
+            line = Line2D([bound, bound], [0, self.strengths[self.strengths>0][bound_idx]], color='red', linewidth=2, transform=ax_right.transData)  # Line between y=4 and y=7
+            ax_right.add_line(line)
         
         fig.tight_layout()
         plt.show()
