@@ -545,6 +545,7 @@ class GSBS:
                                 edgecolor=line_color, facecolor='none', lw=line_width)  # Customize appearance
               axs.add_patch(rect)
           fig.tight_layout()
+          plt.show()
 
     def plot_summary(self):
         fig, axs = plt.subplots(2, 2, gridspec_kw={'height_ratios': [1,1], 'width_ratios': [1, 1]}, figsize=(10, 6))
