@@ -595,6 +595,7 @@ class GSBS:
         # Add a secondary y-axis on the right
         ax_right = axs[1,1].twinx()
         # Set labels for both y-axes
+        ax_right.set_ylim([0, 2])
         ax_right.set_ylabel("Boundary Strength")
         # Control vertical lines with axvline and clipping
         for bound_idx, bound in enumerate(where(self.bounds>0)[0]):
