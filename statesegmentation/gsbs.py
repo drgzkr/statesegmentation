@@ -563,7 +563,6 @@ class GSBS:
         axs[0, 1].set_xlabel('Timepoints')
         axs[0, 1].set_ylabel('Timepoints')
         
-        axs[0, 1].colorbar(corr_plot)
         # Specify the locations of the vertical and horizontal lines
         line_positions = where(self.bounds)[0] # Line positions are where there are bounds
         line_positions = insert(line_positions,[0,len(line_positions)],[0,len(self.bounds)]) # Add the first and the last timepoint
