@@ -551,6 +551,9 @@ class GSBS:
         fig.subplots_adjust(hspace=0.4, wspace=0.3)
         axs[1, 0].axis('off') 
         axs[1, 0].remove()
+        axs[1, 1].axis('off') 
+        axs[1, 1].remove()
+
         axs[1, 1] = plt.subplot2grid((2, 2), (1, 0), colspan=2)
         
         fig.suptitle('Segmentation Summary', fontsize=16)
