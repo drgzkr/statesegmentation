@@ -500,18 +500,20 @@ class GSBS:
                                    color_map = 'PuOr', # Colormap of the correlation matrix
                                    tr_in_seconds = 2, # For the x and y axes labels in minutes
                                    time_tick_fraction = 60, # This adjusts how dense the minute labels on the axes will be, values means every nth is shown
-                                   until_time = 200 # This adjusts for how many timepoints you want to show the correlation matrix: data_len for all
+                                   from_time = 0, 
+                                   until_time = 200
                                    ):
-
+        
           fig, axs = plt.subplots(1,num_subplots,figsize=(scale*3*num_subplots,scale*2*num_subplots), dpi=500/scale)
         
           axs.set_title(title,fontsize=fontsize+2)
-          corr_plot = axs.imshow(corrcoef(self.x)[:until_time,:until_time],interpolation='none',cmap=color_map,vmin=-1,vmax=1,aspect='equal')
+          corr_plot = axs.imshow(corrcoef(self.x)[from_time:until_time,from_time:until_time],interpolation='none',cmap=color_map,vmin=-1,vmax=1,aspect='equal')
           axs.set_xlabel('Time (minutes)',fontsize=fontsize)
           axs.set_ylabel('Time (minutes)',fontsize=fontsize)
         
-          axs.set_xticks(arange(len((linspace(0,until_time-1,until_time)*tr_in_seconds))))
-          axs.set_xticklabels(round(linspace(0,until_time-1,until_time)*tr_in_seconds/60,1), fontsize=8,rotation=60)
+          duration = until_time - from_time  
+          axs.set_xticks(arange(len((linspace(0,duration-1,duration)*tr_in_seconds))))
+          axs.set_xticklabels(round(linspace(0,duration-1,duration)*tr_in_seconds/60,1), fontsize=8,rotation=60)
           ticks = axs.get_xticks()[::time_tick_fraction]
           axs.set_xticks(ticks)
         
