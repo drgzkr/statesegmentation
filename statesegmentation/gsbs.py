@@ -493,7 +493,6 @@ class GSBS:
     def plot_time_by_time_corr_mtx(self,
                                 title = 'Time by Time \n Correlation Matrix',
                                    scale = 0.9, 
-                                   num_subplots = 1, 
                                    fontsize = 4,
                                    line_color = 'black', 
                                    line_width = 0.2, # Width of the boundary lines
@@ -504,7 +503,7 @@ class GSBS:
                                    until_time = 200
                                    ):
         
-          fig, axs = plt.subplots(1,num_subplots,figsize=(scale*3*num_subplots,scale*2*num_subplots), dpi=500/scale)
+          fig, axs = plt.subplots(1,1,figsize=(scale*3*1,scale*2*1), dpi=500/scale)
         
           axs.set_title(title,fontsize=fontsize+2)
           corr_plot = axs.imshow(corrcoef(self.x)[from_time:until_time,from_time:until_time],interpolation='none',cmap=color_map,vmin=-1,vmax=1,aspect='equal')
