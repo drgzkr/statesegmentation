@@ -543,3 +543,42 @@ class GSBS:
                                 edgecolor=line_color, facecolor='none', lw=line_width)  # Customize appearance
               axs.add_patch(rect)
           fig.tight_layout()
+
+    def plot_summary(self):
+        fig, axs = plt.subplots(2, 2, gridspec_kw={'height_ratios': [1, 0.5], 'width_ratios': [1, 1]}, figsize=(10, 8))
+        
+        fig.subplots_adjust(hspace=0.4, wspace=0.3)
+        axs[1, 0].remove()
+        axs[1, 1] = plt.subplot2grid((2, 2), (1, 0), colspan=2)
+        
+        fig.suptitle('Segmentation Summary', fontsize=16)
+        
+        axs[0, 0].set_title('T-Dist Curve')
+        axs[0, 0].plot(self.tdists)
+        
+        axs[0, 1].set_title('Time by Time Corr Mtx and Bopundaries')
+        corr_plot = axs[0, 1].imshow(corrcoef(self.x),interpolation='none',cmap=color_map,vmin=-1,vmax=1,aspect='equal')
+        axs[0, 1].set_xlabel('Timepoints')
+        axs[0, 1].set_ylabel('Timepints')
+        
+        cbar = fig.colorbar(corr_plot)
+        # Specify the locations of the vertical and horizontal lines
+        line_positions = where(self.bounds)[0] # Line positions are where there are bounds
+        line_positions = insert(line_positions,[0,len(line_positions)],[0,len(self.bounds)]) # Add the first and the last timepoint
+        # Add rectangles at diagonal intersections
+        for i in range(len(line_positions) - 1):
+            x_start = line_positions[i]-0.5
+            x_end = line_positions[i + 1]-0.5
+            box_size = x_end - x_start  # Calculate the size of the box
+            # Create a rectangle at the diagonal position
+            rect = Rectangle((x_start, x_start), box_size, box_size,
+                              edgecolor='white', facecolor='none', lw=1)  # Customize appearance
+            axs[0, 1].add_patch(rect)
+        
+        
+        axs[1, 1].set_title('Timeseries Data and Bopundaries')
+        axs[1, 1].imshow(self.x,interpolation='none',aspect='auto')
+        for bound in where(self.bounds>0)[0]:
+            axs[1,1].axvline(bound,color='white')
+        
+        plt.show()
