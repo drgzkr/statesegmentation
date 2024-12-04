@@ -1,5 +1,6 @@
 from numpy import cov, ndarray, nonzero, ones, triu, unique, zeros, arange, max, where, sum, copy, unravel_index, \
     argsort, cumsum, all, equal, array, corrcoef, insert, round, linspace
+import numpy.argmax as npargmax
 from scipy.spatial.distance import cdist
 from scipy.stats import pearsonr, ttest_ind
 from typing import Optional
@@ -553,8 +554,8 @@ class GSBS:
         
         fig.suptitle('Segmentation Summary', fontsize=16)
         
-        axs[0, 0].set_title('T-Dist Curve \n Best Solution: '+str(argmax(self.tdists))+' States')
-        axs[0, 0].axvline(argmax(self.tdists))
+        axs[0, 0].set_title('T-Dist Curve \n Best Solution: '+str(npargmax(self.tdists))+' States')
+        axs[0, 0].axvline(npargmax(self.tdists))
         axs[0, 0].plot(self.tdists)
         
         axs[0, 1].set_title('Time by Time Corr Mtx and Boundaries')
