@@ -582,7 +582,7 @@ class GSBS:
             box_size = x_end - x_start  # Calculate the size of the box
             # Create a rectangle at the diagonal position
             rect = Rectangle((x_start, x_start), box_size, box_size,
-                              edgecolor='white', facecolor='none', lw=1)  # Customize appearance
+                              edgecolor='white', facecolor='none', lw=2)  # Customize appearance
             axs[0, 1].add_patch(rect)
         
         
@@ -601,7 +601,7 @@ class GSBS:
         # Control vertical lines with axvline and clipping
         for bound_idx, bound in enumerate(where(self.bounds>0)[0]):
             #ax_right.axvline(x=bound, ymin=0, ymax=self.strengths[self.strengths>0][bound_idx], color='red', linewidth=2, label='Strength')  # Line between y=2 and y=8 (normalized)
-            line = Line2D([bound, bound], [0, self.strengths[self.strengths>0][bound_idx]], color='red', linewidth=1, transform=ax_right.transData)  # Line between y=4 and y=7
+            line = Line2D([bound, bound], [0, self.strengths[self.strengths>0][bound_idx]+0.5], color='red', linewidth=2, transform=ax_right.transData)  # Line between y=4 and y=7
             ax_right.add_line(line)
         
         fig.tight_layout()
