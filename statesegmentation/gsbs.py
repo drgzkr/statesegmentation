@@ -557,7 +557,7 @@ class GSBS:
         axs[0, 0].plot(self.tdists)
         
         axs[0, 1].set_title('Time by Time Corr Mtx and Bopundaries')
-        corr_plot = axs[0, 1].imshow(corrcoef(self.x),interpolation='none',cmap=color_map,vmin=-1,vmax=1,aspect='equal')
+        corr_plot = axs[0, 1].imshow(corrcoef(self.x),interpolation='none',vmin=-1,vmax=1,aspect='equal')
         axs[0, 1].set_xlabel('Timepoints')
         axs[0, 1].set_ylabel('Timepints')
         
