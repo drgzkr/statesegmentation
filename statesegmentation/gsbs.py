@@ -1,6 +1,6 @@
 from numpy import cov, ndarray, nonzero, ones, triu, unique, zeros, arange, max, where, sum, copy, unravel_index, \
     argsort, cumsum, all, equal, array, corrcoef, insert, round, linspace
-import numpy.argmax as npargmax
+import numpy import argmax as npargmax
 from scipy.spatial.distance import cdist
 from scipy.stats import pearsonr, ttest_ind
 from typing import Optional
