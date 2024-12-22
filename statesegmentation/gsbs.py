@@ -600,8 +600,10 @@ class GSBS:
         ax_right.set_ylabel("Boundary Strength")
         # Control vertical lines with axvline and clipping
         for bound_idx, bound in enumerate(where(self.bounds>0)[0]):
-            #ax_right.axvline(x=bound, ymin=0, ymax=self.strengths[self.strengths>0][bound_idx], color='red', linewidth=2, label='Strength')  # Line between y=2 and y=8 (normalized)
-            axs[1,1].axvline(bound, color='white', linewidth=2)
+            # ax_right.axvline(x=bound, ymin=0, ymax=self.strengths[self.strengths>0][bound_idx], color='red', linewidth=2, label='Strength')  # Line between y=2 and y=8 (normalized)
+            # axs[1,1].axvline(bound, color='white', linewidth=2)
+            line_bg = Line2D([bound-0.5, bound+0.5], [0, 2], color='white', linewidth=2, transform=ax_right.transData)  # Line between y=4 and y=7
+            axs[1,1].add_line(line_bg)
             line = Line2D([bound-0.5, bound+0.5], [0, self.strengths[self.strengths>0][bound_idx]], color='red', linewidth=2, transform=ax_right.transData)  # Line between y=4 and y=7
             ax_right.add_line(line)
         
