@@ -548,7 +548,7 @@ class GSBS:
           plt.show()
 
     def plot_summary(self):
-        fig, axs = plt.subplots(2, 2, gridspec_kw={'height_ratios': [1,1], 'width_ratios': [1, 1]}, figsize=(10, 8))
+        fig, axs = plt.subplots(3, 2, gridspec_kw={'height_ratios': [2,1,1], 'width_ratios': [1, 1]}, figsize=(10, 8))
         
         fig.subplots_adjust(hspace=0.4, wspace=0.3)
         axs[1, 0].axis('off') 
@@ -556,7 +556,14 @@ class GSBS:
         axs[1, 1].axis('off') 
         axs[1, 1].remove()
 
-        axs[1, 1] = plt.subplot2grid((2, 2), (1, 0), colspan=2)
+        axs[1, 1] = plt.subplot2grid((3, 2), (1, 0), colspan=2)
+
+        axs[2, 0].axis('off') 
+        axs[2, 0].remove()
+        axs[2, 1].axis('off') 
+        axs[2, 1].remove()
+
+        axs[2, 1] = plt.subplot2grid((3, 2), (2, 0), colspan=2)
         
         fig.suptitle('Segmentation Summary', fontsize=16)
         
@@ -606,6 +613,25 @@ class GSBS:
             axs[1,1].add_line(line_bg)
             line = Line2D([bound, bound], [0, self.strengths[self.strengths>0][bound_idx]], color='red', linewidth=2, transform=ax_right.transData)  
             ax_right.add_line(line)
-        
+
+
+        axs[2, 1].set_title('Mean State Patterns and Boundaries')
+        axs[2, 1].set_xlabel('Timepoints')
+        axs[2, 1].set_ylabel('Units')
+        state_patterns_timeseries = self.state_patterns[self.states]
+        axs[2, 1].imshow(state_patterns_timeseries,interpolation='none',aspect='auto')
+
+        # Add a secondary y-axis on the right
+        ax2_right = axs[2,1].twinx()
+        # Set labels for both y-axes
+        ax2_right.set_ylim([0, 2])
+        ax2_right.set_ylabel("Boundary Strength")
+        for bound_idx, bound in enumerate(where(self.bounds>0)[0]):
+            # ax_right.axvline(x=bound, ymin=0, ymax=self.strengths[self.strengths>0][bound_idx], color='red', linewidth=2, label='Strength')  
+            # axs[1,1].axvline(bound, color='white', linewidth=2)
+            line_bg = Line2D([bound, bound], [0, 2], color='white', linewidth=2, transform=ax_right.transData) 
+            axs[2,1].add_line(line_bg)
+            line = Line2D([bound, bound], [0, self.strengths[self.strengths>0][bound_idx]], color='red', linewidth=2, transform=ax_right.transData)  
+            ax2_right.add_line(line)
         fig.tight_layout()
         plt.show()
