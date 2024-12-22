@@ -594,7 +594,7 @@ class GSBS:
         
         
         axs[1, 1].set_title('Timeseries Data and Boundaries')
-        axs[1, 1].set_xlabel('Timepoints')
+        # axs[1, 1].set_xlabel('Timepoints')
         axs[1, 1].set_ylabel('Units')
         axs[1, 1].imshow(self.x.T,interpolation='none',aspect='auto')
 
