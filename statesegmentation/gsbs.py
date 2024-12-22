@@ -624,9 +624,10 @@ class GSBS:
         ax2_right.set_ylabel("Boundary Strength")
         
         for bound_idx, bound in enumerate(where(self.bounds>0)[0]):
-            line_bg = Line2D([bound, bound], [0, 2], color='white', linewidth=2, transform=ax_right.transData) 
-            axs[2,1].add_line(line_bg)
-            line = Line2D([bound, bound], [0, self.strengths[self.strengths>0][bound_idx]], color='red', linewidth=2, transform=ax_right.transData)  
-            ax2_right.add_line(line)
+            line_bg2 = Line2D([bound, bound], [0, 2], color='white', linewidth=2, transform=ax_right.transData) 
+            axs[2,1].add_line(line_bg2)
+            line2 = Line2D([bound, bound], [0, self.strengths[self.strengths>0][bound_idx]], color='red', linewidth=2, transform=ax_right.transData)  
+            ax2_right.add_line(line2)
+        
         fig.tight_layout()
         plt.show()
