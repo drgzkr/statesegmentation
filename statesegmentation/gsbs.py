@@ -619,7 +619,7 @@ class GSBS:
         axs[2, 1].set_xlabel('Timepoints')
         axs[2, 1].set_ylabel('Units')
         state_patterns_timeseries = self.state_patterns[self.states-1]
-        axs[2, 1].imshow(state_patterns_timeseries,interpolation='none',aspect='auto')
+        axs[2, 1].imshow(state_patterns_timeseries.T,interpolation='none',aspect='auto')
 
         # Add a secondary y-axis on the right
         ax2_right = axs[2,1].twinx()
