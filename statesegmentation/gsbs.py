@@ -597,18 +597,14 @@ class GSBS:
         axs[1, 1].set_xlabel('Timepoints')
         axs[1, 1].set_ylabel('Units')
         axs[1, 1].imshow(self.x.T,interpolation='none',aspect='auto')
-        # for bound in where(self.bounds>0)[0]:
-        #     axs[1,1].axvline(bound,color='white')
 
         # Add a secondary y-axis on the right
         ax_right = axs[1,1].twinx()
         # Set labels for both y-axes
         ax_right.set_ylim([0, 2])
         ax_right.set_ylabel("Boundary Strength")
-        # Control vertical lines with axvline and clipping
+
         for bound_idx, bound in enumerate(where(self.bounds>0)[0]):
-            # ax_right.axvline(x=bound, ymin=0, ymax=self.strengths[self.strengths>0][bound_idx], color='red', linewidth=2, label='Strength')  
-            # axs[1,1].axvline(bound, color='white', linewidth=2)
             line_bg = Line2D([bound, bound], [0, 2], color='white', linewidth=2, transform=ax_right.transData) 
             axs[1,1].add_line(line_bg)
             line = Line2D([bound, bound], [0, self.strengths[self.strengths>0][bound_idx]], color='red', linewidth=2, transform=ax_right.transData)  
@@ -626,9 +622,8 @@ class GSBS:
         # Set labels for both y-axes
         ax2_right.set_ylim([0, 2])
         ax2_right.set_ylabel("Boundary Strength")
+        
         for bound_idx, bound in enumerate(where(self.bounds>0)[0]):
-            # ax_right.axvline(x=bound, ymin=0, ymax=self.strengths[self.strengths>0][bound_idx], color='red', linewidth=2, label='Strength')  
-            # axs[1,1].axvline(bound, color='white', linewidth=2)
             line_bg = Line2D([bound, bound], [0, 2], color='white', linewidth=2, transform=ax_right.transData) 
             axs[2,1].add_line(line_bg)
             line = Line2D([bound, bound], [0, self.strengths[self.strengths>0][bound_idx]], color='red', linewidth=2, transform=ax_right.transData)  
