@@ -518,8 +518,8 @@ class GSBS:
           ticks = axs.get_xticks()[::time_tick_fraction]
           axs.set_xticks(ticks)
         
-          axs.set_yticks(arange(len((linspace(0,until_time-1,until_time)*tr_in_seconds))))
-          axs.set_yticklabels(round(linspace(0,until_time-1,until_time)*tr_in_seconds/60,1), fontsize=8,rotation=60)
+          axs.set_yticks(arange(len((linspace(0,duration-1,duration)*tr_in_seconds))))
+          axs.set_yticklabels(round(linspace(0,duration-1,duration)*tr_in_seconds/60,1), fontsize=8,rotation=60)
           ticks = axs.get_yticks()[::time_tick_fraction]
           axs.set_yticks(ticks)
         
@@ -531,8 +531,8 @@ class GSBS:
         
         
           # Specify the locations of the vertical and horizontal lines
-          line_positions = where(self.bounds[:until_time])[0] # Line positions are where there are bounds
-          line_positions = insert(line_positions,[0,len(line_positions)],[0,len(self.bounds[:until_time])]) # Add the first and the last timepoint
+          line_positions = where(self.bounds[from_time:until_time])[0] # Line positions are where there are bounds
+          line_positions = insert(line_positions,[0,len(line_positions)],[0,len(self.bounds[from_time:until_time])]) # Add the first and the last timepoint
         
           # Add rectangles at diagonal intersections
           for i in range(len(line_positions) - 1):
