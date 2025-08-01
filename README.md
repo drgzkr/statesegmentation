@@ -1,3 +1,21 @@
+# statesegmentation with nice plotting functions
+
+The exact package, except I added 2 new plotting functions:
+- a summary plot which gives an overview of the GSBS fit.
+<img src="/readmeimages/readme1.png" width="500">
+
+- a time by time correlation matrix figure with lots of setting for a paper-ready plot with fixed proportions etc
+<img src="/readmeimages/readme2.png" width="500">
+
+Naturally, you can't install this fork with pip. Instead, you can do smt like this:
+```bash
+git clone https://github.com/drgzkr/statesegmentation/
+cd statesegmentation/
+pip install .
+```
+
+Here is the original readme of the package:
+
 # statesegmentation
 
 The statesegmentation package contains the implementation of a a greedy search algorithm (GSBS) to
