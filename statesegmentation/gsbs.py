@@ -504,7 +504,7 @@ class GSBS:
                                    from_time = 0, 
                                    until_time = 200,
                                    save_figures = False,
-                                   save_path = title,
+                                   save_path = '',
                                    dpi=100
                                    ):
         
@@ -637,4 +637,5 @@ class GSBS:
         
         fig.tight_layout()
         plt.show()
+
 
