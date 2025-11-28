@@ -502,7 +502,10 @@ class GSBS:
                                    tr_in_seconds = 2, # For the x and y axes labels in minutes
                                    time_tick_fraction = 60, # This adjusts how dense the minute labels on the axes will be, values means every nth is shown
                                    from_time = 0, 
-                                   until_time = 200
+                                   until_time = 200,
+                                   save_figures = False,
+                                   save_path = title,
+                                   dpi=100
                                    ):
         
           fig, axs = plt.subplots(1,1,figsize=(scale*3*1,scale*2*1), dpi=500/scale)
@@ -545,6 +548,9 @@ class GSBS:
                                 edgecolor=line_color, facecolor='none', lw=line_width)  # Customize appearance
               axs.add_patch(rect)
           fig.tight_layout()
+          if save_figures:
+              plt.savefig(save_path, transparent=True, dpi=dpi)
+
           plt.show()
 
     def plot_summary(self):
@@ -631,3 +637,4 @@ class GSBS:
         
         fig.tight_layout()
         plt.show()
+
