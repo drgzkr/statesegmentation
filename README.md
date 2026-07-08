@@ -27,7 +27,9 @@ gsbs_obj.plot_summary()
 gsbs_obj.plot_time_by_time_corr_mtx()
 ```
 
-A side-by-side speed/result comparison on placeholder data (400 voxels × 1000 TRs) is in [`examples/compare_gsbs.ipynb`](examples/compare_gsbs.ipynb) — it fits both classes on identical data and checks that they agree.
+A side-by-side speed/result comparison on placeholder data (200 voxels × 400 TRs) is in [`examples/compare_gsbs.ipynb`](examples/compare_gsbs.ipynb) — it fits both classes on identical data and checks that they agree.
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drgzkr/statesegmentation/blob/main/examples/compare_gsbs.ipynb)
 
 <details>
 <summary>What changed under the hood (results are unchanged)</summary>
