@@ -1,13 +1,13 @@
-# statesegmentation - fast GSBS + nice plotting functions
+# statesegmentation with fast GSBS + nice plotting functions
 
 This is a fork of the `statesegmentation` package with two additions:
 
-1. **`fast_GSBS`** — an exact, drop-in accelerated version of `GSBS` (~5–10× faster, bit-identical results).
-2. **Two plotting functions** — a fit-summary plot and a paper-ready time-by-time correlation matrix.
+1. **`fast_GSBS`** : an exact, drop-in accelerated version of `GSBS` (~5–10× faster, bit-identical results).
+2. **Two plotting functions** : a fit-summary plot and a paper-ready time-by-time correlation matrix.
 
 ## Fast GSBS
 
-`fast_GSBS` is a subclass of `GSBS` that replaces the compute-heavy internals with mathematically identical but much cheaper implementations. It returns **bit-identical** boundaries and t-distances to `GSBS` (verified across statewise detection on/off, every `finetune` mode, `dmin > 1`, and cross-validation via `y`) — only the runtime changes. It is typically **~5–10× faster**, and because the optimization removes work that scales with the number of timepoints, the speedup **grows with the number of TRs** (the longest recordings benefit most; the number of voxels barely matters).
+`fast_GSBS` is a subclass of `GSBS` that replaces the compute-heavy internals with mathematically identical but much cheaper implementations. It returns **bit-identical** boundaries and t-distances to `GSBS` (verified across statewise detection on/off, every `finetune` mode, `dmin > 1`, and cross-validation via `y`). It is typically **~5–10× faster**, and because the optimization removes work that scales with the number of timepoints, the speedup **grows with the number of TRs** (the longest recordings benefit most; the number of voxels barely matters).
 
 Use it exactly like `GSBS`, just change the class name:
 
@@ -27,16 +27,16 @@ gsbs_obj.plot_summary()
 gsbs_obj.plot_time_by_time_corr_mtx()
 ```
 
-A side-by-side speed/result comparison on placeholder data (200 voxels × 400 TRs) is in [`examples/compare_gsbs.ipynb`](examples/compare_gsbs.ipynb) — it fits both classes on identical data and checks that they agree.
+A side-by-side speed/result comparison on placeholder data (400 voxels × 1200 TRs) is in [`examples/compare_gsbs.ipynb`](examples/compare_gsbs.ipynb). It fits both classes on identical data and checks that they agree.
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/drgzkr/statesegmentation/blob/main/examples/compare_gsbs.ipynb)
 
 <details>
 <summary>What changed under the hood (results are unchanged)</summary>
 
-- **`_wdists` / `_wdists_state`** — the within-state score is computed from precomputed prefix sums of the data (O(V) per candidate boundary) and vectorized over all candidates, instead of re-z-scoring the whole timepoint×voxel matrix for every candidate.
+- **`_wdists` / `_wdists_state`** : the within-state score is computed from precomputed prefix sums of the data (O(V) per candidate boundary) and vectorized over all candidates, instead of re-z-scoring the whole timepoint×voxel matrix for every candidate.
 - **`_tdist`** — the "same-state vs adjacent-state" pair masks are read from cached upper-triangle indices instead of rebuilding a full T×T `cdist` matrix every iteration.
-- **`get_strengths`** — consecutive-state correlations via a single `einsum` instead of `scipy.stats.pearsonr` (whose p-value is never used).
+- **`get_strengths`** : consecutive-state correlations via a single `einsum` instead of `scipy.stats.pearsonr` (whose p-value is never used).
 - **Caching** — `cumsum(x)`, `cumsum(z)`, and per-state means are computed once per `fit()` instead of on every internal call.
 
 `fast_GSBS` keeps its own copies of `fit()` and `_wdists_blocks()` because the base class dispatches those through the hard-coded class name; a plain subclass that only overrode the hot methods would silently fall back to the slow path. Keep those two in sync if the base algorithm ever changes.
