@@ -9,7 +9,7 @@ This is a fork of the `statesegmentation` package with two additions:
 
 `fast_GSBS` is a subclass of `GSBS` that replaces the compute-heavy internals with mathematically identical but much cheaper implementations. It returns **bit-identical** boundaries and t-distances to `GSBS` (verified across statewise detection on/off, every `finetune` mode, `dmin > 1`, and cross-validation via `y`) — only the runtime changes. It is typically **~5–10× faster**, and because the optimization removes work that scales with the number of timepoints, the speedup **grows with the number of TRs** (the longest recordings benefit most; the number of voxels barely matters).
 
-Use it exactly like `GSBS` — just change the class name:
+Use it exactly like `GSBS`, just change the class name:
 
 ```python
 from statesegmentation import GSBS, fast_GSBS
